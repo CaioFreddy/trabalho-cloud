@@ -53,7 +53,7 @@ def incluir_compra():
 def consultar_compras():
     try:
         data = json.loads(request.data, parse_float=Decimal)
-        response = post_dynamo(data)
+        response = consulta_lista()
         return response
     except Exception as err:
         return err.args[-1]
