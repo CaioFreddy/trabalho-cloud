@@ -21,9 +21,9 @@ def consulta_lista():
     table = rsc.Table('lista_supermercado')
     response = table.scan()
     data = response['Items']
-    while 'LastEvaluatedKey' in response:
-        response = table.scan(ExclusiveStartKey=response['LastEvaluatedKey'])
-        data.extend(response['Items'])
+    # while 'LastEvaluatedKey' in response:
+    #     response = table.scan(ExclusiveStartKey=response['LastEvaluatedKey'])
+    #     data.extend(response['Items'])
     return str(data)
 
 
