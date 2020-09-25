@@ -41,21 +41,15 @@ def health_check():
 
 @application.route('/incluir', methods=['POST'])
 def incluir_compra():
-    try:
-        data = json.loads(request.data, parse_float=Decimal)
-        response = post_dynamo(data)
-        return response
-    except Exception as err:
-        return err.args[-1]
+    data = json.loads(request.data, parse_float=Decimal)
+    response = post_dynamo(data)
+    return response
 
 
 @application.route('/consultar', methods=['GET'])
 def consultar_compras():
-    try:
-        response = consulta_lista()
-        return response
-    except Exception as err:
-        return err.args[-1]
+    response = consulta_lista()
+    return response
 
 
 if __name__ == '__main__':
