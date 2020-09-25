@@ -19,7 +19,12 @@ def post_dynamo(data):
 def consulta_lista():
     rsc = boto3.resource('dynamodb', region_name='us-east-1')
     table = rsc.Table('lista_supermercado')
-    data = table.scan()
+    response = table.scan()
+    data = response['Items']
+    while 'LastEvaluatedKey' in response:
+        response = table.scan(ExclusiveStartKey=response['LastEvaluatedKey'])
+        data.extend(response['Items'])
+
     return json.dumps(data, default=str)
 
 
