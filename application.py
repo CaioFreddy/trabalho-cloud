@@ -13,7 +13,9 @@ def post_dynamo(data):
     rsc = boto3.resource('dynamodb', region_name='us-east-1')
     table = rsc.Table('lista_supermercado')
     table.put_item(Item=data)
-    return f"Compra com id {data['id']} cadastrada com sucesso!"
+    return {
+        'message': f"Compra com id {data['id']} cadastrada com sucesso!"
+    }
 
 
 def consulta_lista():
@@ -21,10 +23,12 @@ def consulta_lista():
     table = rsc.Table('lista_supermercado')
     response = table.scan()
     data = response['Items']
-    # while 'LastEvaluatedKey' in response:
-    #     response = table.scan(ExclusiveStartKey=response['LastEvaluatedKey'])
-    #     data.extend(response['Items'])
-    return str(data)
+    while 'LastEvaluatedKey' in response:
+        response = table.scan(ExclusiveStartKey=response['LastEvaluatedKey'])
+        data.extend(response['Items'])
+    return {
+        'items': json.loads(json.dumps(data, default=str))
+    }
 
 
 def consulta_item(id):
