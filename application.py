@@ -13,9 +13,7 @@ def post_dynamo(data):
     rsc = boto3.resource('dynamodb', region_name='us-east-1')
     table = rsc.Table('lista_supermercado')
     table.put_item(Item=data)
-    return {
-        'message': f"Compra com id {data['id']} cadastrada com sucesso!"
-    }
+    return f"Compra com id {data['id']} cadastrada com sucesso"
 
 
 def consulta_lista():
@@ -26,9 +24,7 @@ def consulta_lista():
     while 'LastEvaluatedKey' in response:
         response = table.scan(ExclusiveStartKey=response['LastEvaluatedKey'])
         data.extend(response['Items'])
-    return {
-        'items': json.loads(json.dumps(data, default=str))
-    }
+    return json.dumps(data, default=str)
 
 
 def consulta_item(id):
@@ -47,14 +43,13 @@ def health_check():
 def incluir_compra():
     data = json.loads(request.data, parse_float=Decimal)
     response = post_dynamo(data)
-    return json.dumps(response)
+    return response
 
 
 @application.route('/consultar', methods=['GET'])
 def consultar_compras():
-    return "ASD"
-    # response = consulta_lista()
-    # return json.dumps(response)
+    response = consulta_lista()
+    return response
 
 
 if __name__ == '__main__':
