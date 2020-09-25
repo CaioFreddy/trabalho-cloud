@@ -47,13 +47,13 @@ def health_check():
 def incluir_compra():
     data = json.loads(request.data, parse_float=Decimal)
     response = post_dynamo(data)
-    return response
+    return json.dumps(response)
 
 
 @application.route('/consultar', methods=['GET'])
 def consultar_compras():
     response = consulta_lista()
-    return response
+    return json.dumps(response)
 
 
 if __name__ == '__main__':
