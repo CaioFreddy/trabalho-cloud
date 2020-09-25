@@ -15,7 +15,10 @@ def post_dynamo(data):
     rsc = boto3.resource('dynamodb', region_name='us-east-1')
     table = rsc.Table('lista_supermercado')
     table.put_item(Item=data)
-    return f"Compra com id {data['id']} cadastrada com sucesso"
+    return {
+        "message": f"Compra com id {data['id']} cadastrada com sucesso",
+        "datetime": datetime.now().isoformat()
+    }
 
 
 def consulta_lista():
