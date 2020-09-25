@@ -27,16 +27,9 @@ def consulta_lista():
     return json.dumps(data, default=str)
 
 
-def consulta_item(id):
-    rsc = boto3.resource('dynamodb', region_name='us-east-1')
-    table = rsc.Table('lista_supermercado')
-    data = table.scan()
-    return json.dumps(data, default=str)
-
-
 @application.route('/')
 def health_check():
-    return "Health ok"
+    return "Health Ok!!!"
 
 
 @application.route('/incluir', methods=['POST'])
