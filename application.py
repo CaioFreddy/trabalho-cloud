@@ -29,7 +29,9 @@ def consulta_lista():
 
 @application.route('/')
 def health_check():
-    return "Health Ok!!!"
+    return {
+        "message": "Health Ok"
+    }
 
 
 @application.route('/incluir', methods=['POST'])
