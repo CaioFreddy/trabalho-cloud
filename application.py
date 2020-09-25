@@ -4,7 +4,7 @@ import boto3
 import json
 from decimal import Decimal
 
-app = Flask(__name__)
+application = Flask(__name__)
 
 
 def post_dynamo(data):
@@ -24,7 +24,6 @@ def consulta_lista():
     while 'LastEvaluatedKey' in response:
         response = table.scan(ExclusiveStartKey=response['LastEvaluatedKey'])
         data.extend(response['Items'])
-
     return json.dumps(data, default=str)
 
 
@@ -35,30 +34,30 @@ def consulta_item(id):
     return json.dumps(data, default=str)
 
 
-@app.route('/health')
+@application.route('/')
 def health_check():
-    return 'Ok', 200
+    return "Health ok"
 
 
-@app.route('/incluir', methods=['POST'])
+@application.route('/incluir', methods=['POST'])
 def incluir_compra():
     try:
         data = json.loads(request.data, parse_float=Decimal)
         response = post_dynamo(data)
-        return response, 200
+        return response
     except Exception as err:
-        return err.args[-1], 400
+        return err.args[-1]
 
 
-@app.route('/consultar', methods=['GET'])
+@application.route('/consultar', methods=['GET'])
 def consultar_compras():
     try:
         data = json.loads(request.data, parse_float=Decimal)
         response = post_dynamo(data)
-        return response, 200
+        return response
     except Exception as err:
-        return err.args[-1], 400
+        return err.args[-1]
 
 
 if __name__ == '__main__':
-    app.run()
+    application.run(host='0.0.0.0', debug=True)
