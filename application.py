@@ -52,8 +52,9 @@ def incluir_compra():
 
 @application.route('/consultar', methods=['GET'])
 def consultar_compras():
-    response = consulta_lista()
-    return json.dumps(response)
+    return "ASD"
+    # response = consulta_lista()
+    # return json.dumps(response)
 
 
 if __name__ == '__main__':
