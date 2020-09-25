@@ -49,8 +49,9 @@ def incluir_compra():
 
 @application.route('/consultar', methods=['GET'])
 def consultar_compras():
-    response = consulta_lista()
-    return response
+    return "Teste"
+    # response = consulta_lista()
+    # return response
 
 
 if __name__ == '__main__':
