@@ -16,6 +16,7 @@ def post_dynamo(data):
     table = rsc.Table('lista_supermercado')
     table.put_item(Item=data)
     return {
+        "id": data['id'],
         "message": f"Compra com id {data['id']} cadastrada com sucesso",
         "datetime": datetime.now().isoformat()
     }
@@ -29,7 +30,10 @@ def consulta_lista():
     while 'LastEvaluatedKey' in response:
         response = table.scan(ExclusiveStartKey=response['LastEvaluatedKey'])
         data.extend(response['Items'])
-    return json.dumps(data, default=str)
+    return {
+        "datetime": datetime.now().isoformat(),
+        "items": json.loads(json.dumps(data, default=str))
+    }
 
 
 @application.route('/')
@@ -49,9 +53,8 @@ def incluir_compra():
 
 @application.route('/consultar', methods=['GET'])
 def consultar_compras():
-    return "Teste"
-    # response = consulta_lista()
-    # return response
+    response = consulta_lista()
+    return response
 
 
 if __name__ == '__main__':
