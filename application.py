@@ -24,7 +24,7 @@ def consulta_lista():
     while 'LastEvaluatedKey' in response:
         response = table.scan(ExclusiveStartKey=response['LastEvaluatedKey'])
         data.extend(response['Items'])
-    return json.dumps(data, default=str)
+    return str(data)
 
 
 def consulta_item(id):
