@@ -1,8 +1,10 @@
-from flask import Flask, request
-from uuid import uuid4
-import boto3
 import json
+from datetime import datetime
 from decimal import Decimal
+from uuid import uuid4
+
+import boto3
+from flask import Flask, request
 
 application = Flask(__name__)
 
@@ -30,7 +32,8 @@ def consulta_lista():
 @application.route('/')
 def health_check():
     return {
-        "message": "Health Ok"
+        "message": "Health Ok",
+        "datetime": datetime.now().isoformat()
     }
 
 
