@@ -52,7 +52,6 @@ def incluir_compra():
 @application.route('/consultar', methods=['GET'])
 def consultar_compras():
     try:
-        data = json.loads(request.data, parse_float=Decimal)
         response = consulta_lista()
         return response
     except Exception as err:
