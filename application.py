@@ -1,5 +1,7 @@
 import datetime as dt
 import json
+import os
+import time
 from decimal import Decimal
 from uuid import uuid4
 
@@ -7,6 +9,8 @@ import boto3
 from flask import Flask, request
 
 application = Flask(__name__)
+os.environ['TZ'] = 'America/Sao_Paulo'
+time.tzset()
 
 
 def post_dynamo(data):
