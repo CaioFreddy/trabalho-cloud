@@ -14,7 +14,6 @@ time.tzset()
 
 
 def post_dynamo(data):
-    data.pop('id')
     data['id'] = str(uuid4())
     data['dataCompra'] = dt.datetime.now().strftime("%d/%m/%Y")
     data['horaCompra'] = dt.datetime.now().strftime("%H:%M:%S")
