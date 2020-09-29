@@ -7,8 +7,11 @@ from uuid import uuid4
 
 import boto3
 from flask import Flask, request
+from flask_cors import CORS, cross_origin
 
 application = Flask(__name__)
+cors = CORS(application)
+app.config['CORS_HEADERS'] = 'Content-Type'
 os.environ['TZ'] = 'America/Sao_Paulo'
 time.tzset()
 
@@ -52,6 +55,7 @@ def consulta_lista(args):
 
 
 @application.route('/')
+@cross_origin()
 def health_check():
     return {
         "message": "Health Ok",
@@ -60,6 +64,7 @@ def health_check():
 
 
 @application.route('/incluir', methods=['POST'])
+@cross_origin()
 def incluir_compra():
     data = json.loads(request.data, parse_float=Decimal)
     response = post_dynamo(data)
@@ -67,6 +72,7 @@ def incluir_compra():
 
 
 @application.route('/consultar', methods=['GET'])
+@cross_origin()
 def consultar_compras():
     args = dict(request.args)
     response = consulta_lista(args)
