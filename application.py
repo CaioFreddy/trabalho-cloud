@@ -55,7 +55,6 @@ def consulta_lista(args):
 
 
 @application.route('/')
-@cross_origin()
 def health_check():
     return {
         "message": "Health Ok",
