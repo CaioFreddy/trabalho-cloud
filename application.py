@@ -11,7 +11,7 @@ from flask_cors import CORS, cross_origin
 
 application = Flask(__name__)
 cors = CORS(application)
-app.config['CORS_HEADERS'] = 'Content-Type'
+application.config['CORS_HEADERS'] = 'Content-Type'
 os.environ['TZ'] = 'America/Sao_Paulo'
 time.tzset()
 
